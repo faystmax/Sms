@@ -89,26 +89,13 @@ public class SmsAreo implements Main_Sms{
 	 *
 	 * @param id - ID cообщения
 	 * @param phone - номер телефона
-	 * @return array
-	 * для отправленного SMS succses
-	 * либо <код ошибки> в случае ошибки
+	 * @return <стоимость> либо <код ошибки> в случае ошибки
 	 */
 
         @Override
-	public String[] get_sms_cost(String phones, String message)
+	public String get_sms_cost(String phones, String message)
 	{
-		String[] m = {};
-                String json = "";    
-		try { 
-
-                                json = _smsc_send_cmd("sms/cost", "to=" + URLEncoder.encode(phones, CHARSET) 
-						+ "&text=" + URLEncoder.encode(message, CHARSET)) ;
-		}
-		catch (UnsupportedEncodingException e) {
-
-		}
-		// (cost, cnt) или (0, -error)
-		return m;
+                throw new Error("Not supported");
 	}
 
 	/**

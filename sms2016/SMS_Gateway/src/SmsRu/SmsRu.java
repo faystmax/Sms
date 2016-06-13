@@ -65,11 +65,11 @@ public class SmsRu implements Main_Sms{
 	 *
 	 * @param phones - список телефонов через запятую или точку с запятой
 	 * @param message - отправляемое сообщение.
-	 * @return array(<стоимость>, <количество sms>) либо (0, -<код ошибки>) в случае ошибки
+	 * @return <стоимость> либо <код ошибки> в случае ошибки
 	 */
 
         @Override
-	public String[] get_sms_cost(String phones, String message)
+	public String get_sms_cost(String phones, String message)
 	{
 		String[] m = {};
 		try { 
@@ -78,7 +78,8 @@ public class SmsRu implements Main_Sms{
 		}
 		catch (UnsupportedEncodingException e) {
 		}
-		return m;
+                // cost или error
+		return ("100".equals(m[0]) ? m[1] : m[0]);
 	}
 
 	/**

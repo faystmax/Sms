@@ -28,7 +28,7 @@ public interface Main_Sms {
 	 * @param message - отправляемое сообщение.
 	 * @return array(<стоимость>, <количество sms>) либо (0, -<код ошибки>) в случае ошибки
 	 */
-        public String[] get_sms_cost(String phones, String message);
+        public String get_sms_cost(String phones, String message);
         
 	/**
 	 * Проверка статуса отправленного SMS 
