@@ -1,42 +1,35 @@
 package Main;
 
 
-import SmscRu.SmscRu;
-import SmsRu.SmsRu;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author Максим
- */
 import SmscRu.SmscRu;
 import SmsRu.SmsRu;
 import SmsAreo.SmsAreo;
 import SmsGorod.SmsGorod;
 
+/**
+ * Created by Максим on 17.06.2016.
+ */
+
 public class FactorySms {
       
    public FactorySms(){
    }
+
    //возвращает объект для рассылки
-   public Main_Sms getGateway(String SMS,String LOGIN,String PASSWORD)
-   {
-        switch(SMS) 
-        {
-            case "SmscRu": 
-                return new SmscRu(LOGIN,PASSWORD);
-            case "SmsRu": 
-                return new SmsRu(LOGIN,PASSWORD);
-            case "SmsGorod": 
-                return new SmsGorod(LOGIN,PASSWORD);
-            case "SmsAreo": 
-                return new SmsAreo(LOGIN,PASSWORD);      
+   public ISmsClient getGateway(EnumGateWay Sms,String Login,String Password) {
+        switch(Sms) {
+            case SMSCRU:
+                return new SmscRu(Login, Password);
+            case SMSRU:
+                return new SmsRu(Login, Password);
+            case SMSGOROD:
+                return new SmsGorod(Login, Password);
+            case SMSAREO:
+                return new SmsAreo(Login, Password);
+            default:
+                return null;
         }
-       return null;
    }
    
 }

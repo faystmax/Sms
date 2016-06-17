@@ -1,62 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package SmsRu;
-import Main.Main_Sms;
-import java.net.*;
-import java.util.*;
+
+import Main.SmsClientAbstr;
 import java.io.*;
-import java.lang.Math;
-import java.sql.*;
+
 /**
- *
- * @author Максим
+ * Created by Максим on 17.06.2016.
  */
-public class SmsRu implements Main_Sms{
+public class SmsRu extends SmsClientAbstr{
 
-	String LOGIN    = "";         // логин клиента(номер телефона)
-	String PASSWORD = "";      // пароль или MD5-хеш пароля в нижнем регистре
-	String CHARSET  = "utf-8";         // кодировка сообщения: koi8-r, windows-1251 или utf-8 (по умолчанию)
+    /**
+     * constructors
+     */
+    public SmsRu(String _login, String _password) {
+        super(_login,_password);
+    }
+    public SmsRu(String _login, String _password, String _charset) {
+        super(_login,_password,_charset);
+    }
 
-	/**
-	 * constructors
-	 */
-	public SmsRu() {
-	}
-	public SmsRu(String login, String password) {
-		LOGIN    = login;
-		PASSWORD = password;
-	}
-	public SmsRu(String login, String password, String charset) {
-		LOGIN    = login;
-		PASSWORD = password;
-		CHARSET  = charset;
-	}
-
-        /**
+    /**
 	 * Отправка SMS
 	 * 
 	 * @param phones - список телефонов через запятую 
 	 * @param message - отправляемое сообщение
-	 * @return  <id>
-         * или код ошибки
+	 * @return  <id> или код ошибки
 	 */
 	@Override
-	public String send_sms(String phones, String message)
-    {
+	public String send(String phones, String message) {
 		String[] m = {};
-		try {                      
-        		m = _smsc_send_cmd("sms/send", "to=" + URLEncoder.encode(phones, CHARSET) 
-						+ "&text=" + URLEncoder.encode(message, CHARSET)) ;
-                        
+		try {
+            m = sendСmd("sms/send", "to=" + Encode(phones)
+                    + "&text=" + Encode(message)) ;
 		}
 		catch (UnsupportedEncodingException e) {
-
 		}
-
-                //в случае удачи в m идентификатор сообщения
+        //в случае удачи в m идентификатор сообщения
 		return m.length == 1 ?	m[0] : m[1];
 	};
 
@@ -67,18 +45,16 @@ public class SmsRu implements Main_Sms{
 	 * @param message - отправляемое сообщение.
 	 * @return <стоимость> либо <код ошибки> в случае ошибки
 	 */
-
-        @Override
-	public String get_sms_cost(String phones, String message)
-	{
-		String[] m = {};
-		try { 
-                                m = _smsc_send_cmd("sms/cost", "to=" + URLEncoder.encode(phones, CHARSET) 
-						+ "&text=" + URLEncoder.encode(message, CHARSET)) ;
+    @Override
+	public String getCost(String phones, String message) {
+        String[] m = {};
+		try {
+            m = sendСmd("sms/cost", "to=" + Encode(phones)
+                    + "&text=" + Encode(message)) ;
 		}
 		catch (UnsupportedEncodingException e) {
 		}
-                // cost или error
+        // cost или error
 		return ("100".equals(m[0]) ? m[1] : m[0]);
 	}
 
@@ -91,97 +67,54 @@ public class SmsRu implements Main_Sms{
 	 * для отправленного SMS succses
 	 * либо <код ошибки> в случае ошибки
 	 */
-
-        @Override
-	public String get_status(String id, String phone)
-	{
+    @Override
+	public String getStatus(String id, String phone) {
 		String[] m = {};
 		try {
-			m = _smsc_send_cmd("sms/status", "&id=" + URLEncoder.encode(id, CHARSET) );
+            m = sendСmd("sms/status", "&id=" + Encode(id));
 		}
 		catch (UnsupportedEncodingException e) {
 		}
 		return ("103".equals(m[0]) ? "succses" : m[0]);
 	}
         
-        @Override
-	public String get_status(int id, String phone)
+    @Override
+	public String getStatus(int id, String phone)
 	{
 		String[] m = {};
-		try {
-			m = _smsc_send_cmd("sms/status", "&id=" + URLEncoder.encode(Integer.toString(id), CHARSET) );
-		}
-		catch (UnsupportedEncodingException e) {
-
-		}
+        m = sendСmd("sms/status", "&id=" + id );
 		return ("103".equals(m[0]) ? "succses" : m[0]);
 	}
 
-        /**
+    /**
 	 * Получения баланса
 	 *
 	 * @return String баланс или пустую строку в случае ошибки
 	 */
-        @Override
-	public String get_balance() {
+    @Override
+	public String getBalance() {
 		String[] m ;
-		m = _smsc_send_cmd("my/balance", ""); // (balance) или (0, -error)
+        m = sendСmd("my/balance", "");
 		return m.length == 1 ?	"" : m[1];
 	}
 
-	/**
-	 * Формирование и отправка запроса
-	 * @param cmd - требуемая команда
-	 * @param arg - дополнительные параметры
-	 */
+    /**
+     * Формирование и отправка запроса
+     * @param cmd - требуемая команда
+     * @param arg - дополнительные параметры
+     * @return line - ответ сервера
+     */
+    private String[] sendСmd(String cmd, String arg){
+        String ret = "";
+        try {
+            String url = "http://sms.ru/" + cmd +"?login=" + Encode(login)
+                    + "&password=" + Encode(password)
+                    + "&" + arg;
+            ret = readUrl(url);
+        }
+        catch ( IOException e) {
+        }
+        return ret.split("\n");
+    }
 
-	private String[] _smsc_send_cmd(String cmd, String arg){
-		String[] m = {};
-		String ret = "";
-		try {
-			String url = "http://sms.ru/" + cmd +"?login="+URLEncoder.encode(LOGIN, CHARSET)
-                                                                                + "&password=" + URLEncoder.encode(PASSWORD, CHARSET)
-                                                                                + "&" + arg;		
-			int i = 0;
-			do {
-				if (i > 0)
-                                    Thread.sleep(2000 + 1000 * i);
-				ret = _smsc_read_url(url);
-			}
-			while ("".equals(ret) && ++i < 4);
-		}
-		catch (UnsupportedEncodingException | InterruptedException e) {
-		}
-
-		return ret.split("\n");
-	}
-
-	/**
-	 * Чтение URL
-	 * @param url - ID cообщения
-	 * @return line - ответ сервера
-	 */
-	private String _smsc_read_url(String url) {
-
-		String line = "", real_url = url;
-		String[] param = {};
-
-		try {
-			URL u = new URL(real_url);
-			InputStream is;
-			is = u.openStream();                     
-			InputStreamReader reader = new InputStreamReader(is, CHARSET);
-			int ch;
-			while ((ch = reader.read()) != -1) {
-				line += (char)ch;
-			}
-
-			reader.close();
-		}
-		catch (MalformedURLException e) { // Неверно урл, протокол...
-		}
-		catch (IOException e) {
-		}
-		return line;
-	}
 }
