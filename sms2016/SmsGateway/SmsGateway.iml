@@ -10,5 +10,6 @@
     <orderEntry type="library" name="javax.xml.parsers-1_1" level="project" />
     <orderEntry type="library" name="json-simple" level="project" />
     <orderEntry type="library" name="commons-codec-1.4.0" level="project" />
+    <orderEntry type="library" name="slf4j-api-1.7.21" level="project" />
   </component>
 </module>

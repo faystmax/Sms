@@ -115,7 +115,7 @@ public class SmsGorod extends SmsClientBase {
                 Element message = (Element) root.getElementsByTagName("money").item(0);
                 balance = message.getTextContent(); // тоже для упрощения
             } catch (ParserConfigurationException | SAXException | IOException ex) {
-                Logger.getLogger(SmsGorod.class.getName()).log(Level.SEVERE, null, ex);
+                LOG.info(ex.toString());
             }
 
             return ( balance== null ? "" : balance) ;
