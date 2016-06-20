@@ -1,9 +1,9 @@
 package sms;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.json.simple.*;
 import org.json.simple.parser.*;
@@ -13,6 +13,7 @@ import org.json.simple.parser.*;
  */
 public class SmsAreo extends SmsClientBase {
 
+    private static final Logger LOG = LoggerFactory.getLogger(SmsAreo.class);
     /**
      * constructors
      */
@@ -45,7 +46,7 @@ public class SmsAreo extends SmsClientBase {
         try {
             obj = parser.parse(json);
         } catch (ParseException ex) {
-            Logger.getLogger(SmsAreo.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.info(ex.toString());
         }
         JSONObject jsonObj = (JSONObject) obj;
         m = new String[2];
@@ -92,7 +93,7 @@ public class SmsAreo extends SmsClientBase {
                 try {
                     obj = parser.parse(json);
                 } catch (ParseException ex) {
-                    Logger.getLogger(SmsAreo.class.getName()).log(Level.SEVERE, null, ex);
+                    LOG.info(ex.toString());
                 }
                 JSONObject jsonObj = (JSONObject) obj;
                 m = new String[2];
@@ -117,7 +118,7 @@ public class SmsAreo extends SmsClientBase {
             m[0] = (String) jsonObj.get("result");
             m[1] = Long.toString((Long) jsonObj.get("id"));
         } catch (ParseException ex) {
-                    Logger.getLogger(SmsAreo.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.info(ex.toString());
                 }
 		return ("delivery success".equals(m[0]) ? "succses" : m[0]);
 	}
@@ -139,7 +140,7 @@ public class SmsAreo extends SmsClientBase {
         try {
             obj = parser.parse(m);
         } catch (ParseException ex) {
-            Logger.getLogger(SmsAreo.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.info(ex.toString());
         }
         JSONObject jsonObj = (JSONObject) obj;
         String otv =(String) jsonObj.get("balance");

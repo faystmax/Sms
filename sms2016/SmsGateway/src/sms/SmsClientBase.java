@@ -7,8 +7,7 @@ import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 /**
  * Created by Максим on 17.06.2016.
@@ -17,7 +16,7 @@ public abstract class SmsClientBase implements ISmsClient {
     protected String login    = "";                         // логин клиента
     protected String password = "";                         // пароль или MD5-хеш пароля в нижнем регистре
     protected static final String charset  = "utf-8";       // кодировка сообщения
-    protected static final Logger LOG = LoggerFactory.getLogger(SmsClientBase.class);
+
     /**
      * constructors
      */

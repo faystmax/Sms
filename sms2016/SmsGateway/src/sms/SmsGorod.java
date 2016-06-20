@@ -1,8 +1,8 @@
 package sms;
 
 import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,6 +16,7 @@ import org.xml.sax.InputSource;
  */
 public class SmsGorod extends SmsClientBase {
 
+    private static final Logger LOG = LoggerFactory.getLogger(SmsGorod.class);
     /**
      * constructors
      */

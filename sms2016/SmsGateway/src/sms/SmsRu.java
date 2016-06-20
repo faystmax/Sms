@@ -1,12 +1,15 @@
 package sms;
 
 import java.io.*;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 /**
  * Created by Максим on 17.06.2016.
  */
 public class SmsRu extends SmsClientBase {
 
+	private static final Logger LOG = LoggerFactory.getLogger(SmsRu.class);
     /**
      * constructors
      */
