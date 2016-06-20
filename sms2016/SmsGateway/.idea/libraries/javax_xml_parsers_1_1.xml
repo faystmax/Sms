@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="javax.xml.parsers-1_1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../javax.xml.parsers-1_1/javax.xml.parsers-1_1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
