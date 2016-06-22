@@ -1,7 +1,7 @@
 package main;
 
 
-import sms.EnumGateWay;
+import sms.GateWay;
 import sms.ISmsClient;
 
 /**
@@ -16,10 +16,10 @@ public class Test {
                 SmsRu,
                 SmsGorod,
                 SmsAreo;
-        SmscRu = test.getGateway(EnumGateWay.SMSCRU,"faystmax","vfrcbvrf77");
-        SmsRu = test.getGateway(EnumGateWay.SMSRU,"79130825174","vfrcbvrf77");
-        SmsGorod = test.getGateway(EnumGateWay.SMSGOROD,"faystmax","vfrcbvrf77");
-        SmsAreo = test.getGateway(EnumGateWay.SMSAREO,"faystmax@gmail.com","vfrcbvrf77");
+        SmscRu = test.getGateway(GateWay.SMSCRU,"faystmax","vfrcbvrf77");
+        SmsRu = test.getGateway(GateWay.SMSRU,"79130825174","vfrcbvrf77");
+        SmsGorod = test.getGateway(GateWay.SMSGOROD,"faystmax","vfrcbvrf77");
+        SmsAreo = test.getGateway(GateWay.SMSAREO,"faystmax@gmail.com","vfrcbvrf77");
         
         //тест четырёх классов
         String balance1 = SmscRu.getBalance();

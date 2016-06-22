@@ -14,6 +14,7 @@ import org.json.simple.parser.*;
 public class SmsAreo extends SmsClientBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(SmsAreo.class);
+    private String from;            //группа отправки
     /**
      * constructors
      */
@@ -36,7 +37,7 @@ public class SmsAreo extends SmsClientBase {
         String json = "";
 		try {                      
 			json = sendСmd("send", "to=" + toCharset(phones) + "&text=" + toCharset(message)
-                    + "&from=NEWS") ;
+                    + "&from=" + toCharset(from)) ;
 		}
 		catch (UnsupportedEncodingException e) {
 		}

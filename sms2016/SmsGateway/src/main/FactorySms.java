@@ -14,7 +14,7 @@ public class FactorySms {
    }
 
    //возвращает объект для рассылки
-   public ISmsClient getGateway(EnumGateWay Sms, String Login, String Password) {
+   public ISmsClient getGateway(GateWay Sms, String Login, String Password) {
         switch(Sms) {
             case SMSCRU:
                 return new SmscRu(Login, Password);
