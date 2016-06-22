@@ -14,7 +14,6 @@ import org.json.simple.parser.*;
 public class SmsAreo extends SmsClientBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(SmsAreo.class);
-    private String from;            //группа отправки
     /**
      * constructors
      */
@@ -37,7 +36,7 @@ public class SmsAreo extends SmsClientBase {
         String json = "";
 		try {                      
 			json = sendСmd("send", "to=" + toCharset(phones) + "&text=" + toCharset(message)
-                    + "&from=" + toCharset(from)) ;
+                    + "&from=" + toCharset(senderName));
 		}
 		catch (UnsupportedEncodingException e) {
 		}
@@ -54,7 +53,7 @@ public class SmsAreo extends SmsClientBase {
         m[0] = (String) jsonObj.get("result");
 
         //в случае удачи в m идентификатор сообщения
-        return ("reject".equals(m[0]) ? (String) jsonObj.get("reason")
+        return ( jsonObj.get("id") == null ? m[0]
                                       :  Long.toString((Long) jsonObj.get("id")));
 	}
 

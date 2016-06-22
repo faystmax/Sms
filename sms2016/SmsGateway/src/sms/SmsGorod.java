@@ -37,7 +37,9 @@ public class SmsGorod extends SmsClientBase {
     {
         String[] m = {};
         try {
-            m = sendСmd("", "dadr=" + toCharset(phones) + "&text=" + toCharset(message));
+            m = sendСmd("", "dadr=" + toCharset(phones)
+                            + "&text=" + toCharset(message)
+                            + "&sadr=" + toCharset(senderName));
         }
         catch (UnsupportedEncodingException e) {
         }

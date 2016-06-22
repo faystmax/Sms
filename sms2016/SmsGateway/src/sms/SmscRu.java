@@ -32,7 +32,8 @@ public class SmscRu extends SmsClientBase {
 		String[] m = {};
 		try {
             m = sendСmd("send", "cost=3&phones=" + toCharset(phones)
-					+ "&mes=" + toCharset(message));
+					+ "&mes=" + toCharset(message)
+					+ "&sender=" + toCharset(senderName));
 		}
 		catch (UnsupportedEncodingException e) {
 		}

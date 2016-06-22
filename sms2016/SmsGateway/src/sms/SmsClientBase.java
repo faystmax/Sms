@@ -15,6 +15,7 @@ import java.net.URLEncoder;
 public abstract class SmsClientBase implements ISmsClient {
     protected String login    = "";                         // логин клиента
     protected String password = "";                         // пароль или MD5-хеш пароля в нижнем регистре
+    protected String senderName = "default";                       // имя отправителя
     protected static final String charset  = "utf-8";       // кодировка сообщения
 
     /**
@@ -23,6 +24,11 @@ public abstract class SmsClientBase implements ISmsClient {
     public SmsClientBase(String login, String password) {
         this.login    = login;
         this.password = password;
+    }
+    public SmsClientBase(String login, String password,String senderName) {
+        this.login    = login;
+        this.password = password;
+        this.senderName = senderName;
     }
 
     /**
